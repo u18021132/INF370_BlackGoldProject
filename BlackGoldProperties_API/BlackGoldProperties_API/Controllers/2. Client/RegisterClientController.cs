@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BlackGoldProperties_API.Models;
+using BlackGoldProperties_API.Controllers;
+
+namespace BlackGoldProperties_API.Controllers._2._Client
+{
+    public class RegisterClientController : ApiController
+    {
+        [HttpPost] 
+        [Route("api/registerclient")]   
+        public IHttpActionResult Post([FromUri] string email, [FromUri] string name, [FromUri] string surname, [FromUri] string contactnumber, [FromUri] string altcontactnumber, [FromUri] string address, [FromUri] string password, [FromUri] string idnumber, [FromUri] string passportnumber)
+        {
+
+            //DB context
+            var db = LinkToDBController.db;
+            db.Configuration.ProxyCreationEnabled = false;
+
+            //Null checks
+            if (string.IsNullOrEmpty(email))
+                return BadRequest();
+            if (string.IsNullOrEmpty(name))
+                return BadRequest();
+            if (string.IsNullOrEmpty(surname))
+                return BadRequest();
+            if (string.IsNullOrEmpty(address))
+                return BadRequest();
+            if (string.IsNullOrEmpty(password))
+                return BadRequest();
+
+
+            //Check if client is potential client to be deleted
+            var potential = db.POTENTIALCLIENTs.FirstOrDefault(x => x.POTENTIALCLIENTEMAIL == email);
+            if (potential != null)
+            {
+                //Delete specified client
+                db.POTENTIALCLIENTs.Remove(potential);
+
+                //Save DB Changes
+                db.SaveChanges();
+            }
+
+            //Add a client 
+            db.USERs.Add(new USER
+            {
+               USEREMAIL = email,
+               USERPASSWORD = password, //change this to be hashed
+               USERNAME = name,
+               USERSURNAME = surname,
+               USERCONTACTNUMBER = contactnumber,
+               USERALTCONTACTNUMBER = altcontactnumber,
+               USERIDNUMBER = idnumber,
+               USERPASSPORTNUMBER = passportnumber,
+               USERADDRESS = address
+            });
+
+            //Save DB changes
+            db.SaveChanges();
+
+            //Find the user id that was just registered
+            int lastuserid = db.USERs.Max(item => item.USERID);
+
+            //Link the user profile to client
+            db.CLIENTs.Add(new CLIENT
+            {
+                //Set user id to last registered id
+                USERID = lastuserid,
+
+                //Assign client as 'newly registered'
+                CLIENTTYPEID = 1 
+            });
+
+            //Save DB changes
+            db.SaveChanges();
+
+            //Return ok
+            return Ok();
+        }
+    }
+}
