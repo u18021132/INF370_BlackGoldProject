@@ -18,9 +18,11 @@ namespace BlackGoldProperties_API.Models
         public PROPERTY()
         {
             this.ADVERTISEMENTs = new HashSet<ADVERTISEMENT>();
+            this.EMPLOYEEPROPERTies = new HashSet<EMPLOYEEPROPERTY>();
             this.INSPECTIONs = new HashSet<INSPECTION>();
             this.LISTINGPICTUREs = new HashSet<LISTINGPICTURE>();
             this.PRICEs = new HashSet<PRICE>();
+            this.PROPERTYTERMs = new HashSet<PROPERTYTERM>();
             this.PROPERTYOTHERBUILDINGDETAILs = new HashSet<PROPERTYOTHERBUILDINGDETAIL>();
             this.PROPERTYDOCUMENTs = new HashSet<PROPERTYDOCUMENT>();
             this.PROPERTYMANDATEs = new HashSet<PROPERTYMANDATE>();
@@ -34,17 +36,17 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int PROPERTYID { get; set; }
-        public int SUBURBID { get; set; }
-        public int MARKETTYPEID { get; set; }
-        public int PROPERTYSTATUSID { get; set; }
-        public int PROPERTYOWNERID { get; set; }
-        public int USERID { get; set; }
-        public int PROPERTYTYPEID { get; set; }
+        public Nullable<int> SUBURBID { get; set; }
+        public Nullable<int> MARKETTYPEID { get; set; }
+        public Nullable<int> PROPERTYSTATUSID { get; set; }
+        public Nullable<int> PROPERTYOWNERID { get; set; }
+        public Nullable<int> PROPERTYTYPEID { get; set; }
         public string PROPERTYADDRESS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ADVERTISEMENT> ADVERTISEMENTs { get; set; }
-        public virtual EMPLOYEE EMPLOYEE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMPLOYEEPROPERTY> EMPLOYEEPROPERTies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INSPECTION> INSPECTIONs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,6 +54,8 @@ namespace BlackGoldProperties_API.Models
         public virtual MARKETTYPE MARKETTYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRICE> PRICEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PROPERTYTERM> PROPERTYTERMs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PROPERTYOTHERBUILDINGDETAIL> PROPERTYOTHERBUILDINGDETAILs { get; set; }
         public virtual PROPERTYSTATU PROPERTYSTATU { get; set; }

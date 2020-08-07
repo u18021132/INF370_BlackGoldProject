@@ -13,10 +13,10 @@ namespace BlackGoldProperties_API.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BlackGoldDBEntities5 : DbContext
+    public partial class BlackGoldDBEntities10 : DbContext
     {
-        public BlackGoldDBEntities5()
-            : base("name=BlackGoldDBEntities5")
+        public BlackGoldDBEntities10()
+            : base("name=BlackGoldDBEntities10")
         {
         }
     
@@ -34,6 +34,7 @@ namespace BlackGoldProperties_API.Models
         public virtual DbSet<CLIENTTYPE> CLIENTTYPEs { get; set; }
         public virtual DbSet<DEFECT> DEFECTs { get; set; }
         public virtual DbSet<EMPLOYEE> EMPLOYEEs { get; set; }
+        public virtual DbSet<EMPLOYEEPROPERTY> EMPLOYEEPROPERTies { get; set; }
         public virtual DbSet<EMPLOYEEROLE> EMPLOYEEROLEs { get; set; }
         public virtual DbSet<EMPLOYEETYPE> EMPLOYEETYPEs { get; set; }
         public virtual DbSet<FEATURE> FEATUREs { get; set; }
@@ -59,6 +60,7 @@ namespace BlackGoldProperties_API.Models
         public virtual DbSet<PROPERTYOWNER> PROPERTYOWNERs { get; set; }
         public virtual DbSet<PROPERTYSPACE> PROPERTYSPACEs { get; set; }
         public virtual DbSet<PROPERTYSTATU> PROPERTYSTATUS { get; set; }
+        public virtual DbSet<PROPERTYTERM> PROPERTYTERMs { get; set; }
         public virtual DbSet<PROPERTYTYPE> PROPERTYTYPEs { get; set; }
         public virtual DbSet<PROVINCE> PROVINCEs { get; set; }
         public virtual DbSet<PURCHASEOFFER> PURCHASEOFFERs { get; set; }
@@ -73,6 +75,7 @@ namespace BlackGoldProperties_API.Models
         public virtual DbSet<SPACETYPE> SPACETYPEs { get; set; }
         public virtual DbSet<SUBURB> SUBURBs { get; set; }
         public virtual DbSet<SUBURBPOINTOFINTEREST> SUBURBPOINTOFINTERESTs { get; set; }
+        public virtual DbSet<TERM> TERMs { get; set; }
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VALUATION> VALUATIONs { get; set; }
     }

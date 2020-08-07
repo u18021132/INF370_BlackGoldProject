@@ -15,8 +15,8 @@ namespace BlackGoldProperties_API.Models
     public partial class LISTINGPICTURE
     {
         public int LISTINGPICTUREID { get; set; }
-        public int PROPERTYID { get; set; }
-        public byte[] LISTINGPICTUREIMAGE { get; set; }
+        public Nullable<int> PROPERTYID { get; set; }
+        public string LISTINGPICTUREIMAGE { get; set; }
     
         public virtual PROPERTY PROPERTY { get; set; }
     }

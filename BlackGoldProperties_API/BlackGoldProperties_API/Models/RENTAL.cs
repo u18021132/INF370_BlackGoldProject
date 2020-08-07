@@ -16,12 +16,12 @@ namespace BlackGoldProperties_API.Models
     {
         public int RENTALID { get; set; }
         public int PROPERTYID { get; set; }
-        public int RENTALTYPEID { get; set; }
-        public int RENTALSTATUSID { get; set; }
-        public int USERID { get; set; }
+        public Nullable<int> RENTALTYPEID { get; set; }
+        public Nullable<int> RENTALSTATUSID { get; set; }
+        public Nullable<int> USERID { get; set; }
         public Nullable<System.DateTime> RENTALDATESTART { get; set; }
         public Nullable<System.DateTime> RENTALDATEEND { get; set; }
-        public byte[] RENTALAGREEMENTDOCUMENT { get; set; }
+        public string RENTALAGREEMENTDOCUMENT { get; set; }
     
         public virtual CLIENT CLIENT { get; set; }
         public virtual PROPERTY PROPERTY { get; set; }

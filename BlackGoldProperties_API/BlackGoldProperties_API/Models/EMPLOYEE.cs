@@ -17,10 +17,10 @@ namespace BlackGoldProperties_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EMPLOYEE()
         {
+            this.AUDITREPORTs = new HashSet<AUDITREPORT>();
+            this.EMPLOYEEPROPERTies = new HashSet<EMPLOYEEPROPERTY>();
             this.EMPLOYEEROLEs = new HashSet<EMPLOYEEROLE>();
             this.INSPECTIONs = new HashSet<INSPECTION>();
-            this.MANDATEs = new HashSet<MANDATE>();
-            this.PROPERTies = new HashSet<PROPERTY>();
             this.VALUATIONs = new HashSet<VALUATION>();
         }
     
@@ -30,14 +30,14 @@ namespace BlackGoldProperties_API.Models
         public decimal EMPLOYEERENUMERATON { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AUDITREPORT> AUDITREPORTs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMPLOYEEPROPERTY> EMPLOYEEPROPERTies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLOYEEROLE> EMPLOYEEROLEs { get; set; }
         public virtual USER USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INSPECTION> INSPECTIONs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MANDATE> MANDATEs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PROPERTY> PROPERTies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VALUATION> VALUATIONs { get; set; }
     }

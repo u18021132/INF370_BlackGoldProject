@@ -11,7 +11,7 @@ namespace BlackGoldProperties_API.Controllers._2._Client
 {
     public class RentalApplicationController : ApiController
     {
-        //READ ALL DATA//
+        //READ ALL DATA//    ---FIX THIS TO READ FOR A SPECIFIC CLIENT
         [HttpGet]
         [Route("api/rentalapplication")]
         public IHttpActionResult Get()
@@ -55,7 +55,7 @@ namespace BlackGoldProperties_API.Controllers._2._Client
         }
 
 
-        //READ DATA OF SPECIFIC ID//
+        //READ DATA OF SPECIFIC ID// 
         [HttpGet]
         [Route("api/rentalapplication")]
         public IHttpActionResult Get([FromUri] int id)
@@ -101,7 +101,7 @@ namespace BlackGoldProperties_API.Controllers._2._Client
         //Apply To Rent//   --This is purely documents and should be done when we fix db file tables   --- Cater for term and start date chosen by user! Cannot make use of paramers yet as DB must be fixed!
         [HttpPost]
         [Route("api/rentalapplication")]
-        public IHttpActionResult Post([FromUri] string description, [FromUri] int term, [FromUri] DateTime start)
+        public IHttpActionResult Post([FromUri] string description, [FromUri] int term, [FromUri] DateTime start)  //-- make rental application status = 1
         {
             try
             {
@@ -127,7 +127,6 @@ namespace BlackGoldProperties_API.Controllers._2._Client
             }
             catch (Exception)
             {
-
                 return NotFound();
             }
         }

@@ -38,6 +38,7 @@ namespace BlackGoldProperties_API.Controllers._3._Agent
                     PropertyFeatures = x.PROPERTYFEATUREs.Select(y => new { y.FEATURE.FEATUREID, y.FEATURE.FEATUREDESCRIPTION, y.PROPERTYFEATUREQUANTITY }).ToList(),
                     Pointsofinterest = x.SUBURB.SUBURBPOINTOFINTERESTs.Select(y => new { y.SUBURB.SUBURBID, y.SUBURB.SUBURBNAME, y.POINTOFINTEREST.POINTOFINTERESTID, y.POINTOFINTEREST.POINTOFINTERESTNAME, y.POINTOFINTEREST.POINTOFINTERESTTYPE.POINTOFINTERESTTYPEID, y.POINTOFINTEREST.POINTOFINTERESTTYPE.POINTOFINTERESTTYPEDESCRIPTION }).ToList(),
                     Mandates = x.PROPERTYMANDATEs.Select(y => new { y.MANDATE.MANDATEID, y.MANDATE.MANDATEDATE, y.MANDATE.MANDATEDOCUMENT, y.MANDATE.MANDATETYPE.MANDATETYPEID, y.MANDATE.MANDATETYPE.MANDATETYPEDESCRIPTION }).ToList(),
+                    Agent = x.EMPLOYEEPROPERTies.Select(y => new { y.EMPLOYEE.USER.USERNAME, y.EMPLOYEE.USER.USERSURNAME, y.EMPLOYEE.USER.USEREMAIL}).ToList(),
                     x.MARKETTYPE.MARKETTYPEID,
                     x.MARKETTYPE.MARKETTYPEDESCRIPTION,
                     x.PROPERTYTYPE.PROPERTYTYPEID,
@@ -95,6 +96,7 @@ namespace BlackGoldProperties_API.Controllers._3._Agent
                     PropertyFeatures = x.PROPERTYFEATUREs.Select(y => new { y.FEATURE.FEATUREID, y.FEATURE.FEATUREDESCRIPTION, y.PROPERTYFEATUREQUANTITY }).ToList(),
                     Pointsofinterest = x.SUBURB.SUBURBPOINTOFINTERESTs.Select(y => new { y.SUBURB.SUBURBID, y.SUBURB.SUBURBNAME, y.POINTOFINTEREST.POINTOFINTERESTID, y.POINTOFINTEREST.POINTOFINTERESTNAME, y.POINTOFINTEREST.POINTOFINTERESTTYPE.POINTOFINTERESTTYPEID, y.POINTOFINTEREST.POINTOFINTERESTTYPE.POINTOFINTERESTTYPEDESCRIPTION }).ToList(),
                     Mandates = x.PROPERTYMANDATEs.Select(y => new { y.MANDATE.MANDATEID, y.MANDATE.MANDATEDATE, y.MANDATE.MANDATEDOCUMENT, y.MANDATE.MANDATETYPE.MANDATETYPEID, y.MANDATE.MANDATETYPE.MANDATETYPEDESCRIPTION }).ToList(),
+                    Agent = x.EMPLOYEEPROPERTies.Select(y => new { y.EMPLOYEE.USER.USERNAME, y.EMPLOYEE.USER.USERSURNAME, y.EMPLOYEE.USER.USEREMAIL }).ToList(),
                     x.MARKETTYPE.MARKETTYPEID,
                     x.MARKETTYPE.MARKETTYPEDESCRIPTION,
                     x.PROPERTYTYPE.PROPERTYTYPEID,
@@ -165,16 +167,25 @@ namespace BlackGoldProperties_API.Controllers._3._Agent
                     MARKETTYPEID = markettypeid,
                     PROPERTYSTATUSID = 1, //property is flagged as 'Available'
                     PROPERTYOWNERID = lastownerid, //assign newly registered property owner to the property
-                    USERID = agentid,
+                    //USERID = agentid,   --Fix this to go through the associative
                     PROPERTYTYPEID = propertytypeid,
                     PROPERTYADDRESS = address
                 });
+
 
                 //Save DB changes
                 db.SaveChanges();
 
                 //Get newly added property
                 int lastpropertyid = db.PROPERTies.Max(item => item.PROPERTYID);
+
+
+                //Add employee to the property    -- TEST THIS
+                db.EMPLOYEEPROPERTies.Add(new EMPLOYEEPROPERTY
+                {
+                    PROPERTYID = lastpropertyid,
+                    USERID = agentid
+                });
 
                 //Add the price to the property
                 db.PRICEs.Add(new PRICE
@@ -256,8 +267,25 @@ namespace BlackGoldProperties_API.Controllers._3._Agent
                 properties.SUBURBID = suburbid;
                 properties.MARKETTYPEID = markettypeid;
                 properties.PROPERTYTYPEID = propertytypeid;
-                properties.USERID = agentid;
                 properties.PROPERTYADDRESS = address;
+
+
+                //Find all associative records for employee properties    --- TEST THIS UPDATE FOR EMPLOYEE TO PROPERTY
+                var employee = db.EMPLOYEEPROPERTies.Where(x => x.PROPERTYID == id);
+
+                //Delete employee properties records
+                foreach (var item in employee)
+                {
+                    db.EMPLOYEEPROPERTies.Remove(item);
+                }
+
+                //Add updated employee properties 
+                db.EMPLOYEEPROPERTies.Add(new EMPLOYEEPROPERTY
+                {
+                    PROPERTYID = id,
+                    USERID = agentid
+                });
+
 
                 //Add the updated price to the property without deleting the old price
                 db.PRICEs.Add(new PRICE

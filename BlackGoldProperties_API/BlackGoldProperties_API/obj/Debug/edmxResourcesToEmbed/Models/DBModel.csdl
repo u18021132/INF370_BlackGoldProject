@@ -14,15 +14,17 @@
       <PropertyRef Name="AUDITREPORTID" />
     </Key>
     <Property Name="AUDITREPORTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USERID" Type="Int32" />
     <Property Name="AUDITREPORTDATE" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="AUDITREPORTDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="AUDITREPORTDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_AUDITREP_REFERENCE_EMPLOYEE" FromRole="AUDITREPORT" ToRole="EMPLOYEE" />
   </EntityType>
   <EntityType Name="CITY">
     <Key>
       <PropertyRef Name="CITYID" />
     </Key>
     <Property Name="CITYID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PROVINCEID" Type="Int32" Nullable="false" />
+    <Property Name="PROVINCEID" Type="Int32" />
     <Property Name="CITYNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PROVINCE" Relationship="Self.FK_CITY_RELATIONS_PROVINCE" FromRole="CITY" ToRole="PROVINCE" />
     <NavigationProperty Name="SUBURBs" Relationship="Self.FK_SUBURB_RELATIONS_CITY" FromRole="CITY" ToRole="SUBURB" />
@@ -32,7 +34,7 @@
       <PropertyRef Name="USERID" />
     </Key>
     <Property Name="USERID" Type="Int32" Nullable="false" />
-    <Property Name="CLIENTTYPEID" Type="Int32" Nullable="false" />
+    <Property Name="CLIENTTYPEID" Type="Int32" />
     <NavigationProperty Name="CLIENTTYPE" Relationship="Self.FK_CLIENT_RELATIONS_CLIENTTY" FromRole="CLIENT" ToRole="CLIENTTYPE" />
     <NavigationProperty Name="USER" Relationship="Self.FK_CLIENT_RELATIONS_USER" FromRole="CLIENT" ToRole="USER" />
     <NavigationProperty Name="CLIENTDOCUMENTs" Relationship="Self.FK_CLIENTDO_RELATIONS_CLIENT" FromRole="CLIENT" ToRole="CLIENTDOCUMENT" />
@@ -46,8 +48,8 @@
     </Key>
     <Property Name="CLIENTDOCUMENTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="USERID" Type="Int32" Nullable="false" />
-    <Property Name="CLIENTDOCUMENTTYPEID" Type="Int32" Nullable="false" />
-    <Property Name="CLIENTDOCUMENT1" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="CLIENTDOCUMENTTYPEID" Type="Int32" />
+    <Property Name="CLIENTDOCUMENT1" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CLIENTDOCUMENTUPLOADDATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CLIENTDOCUMENTUPLOADEXPIRY" Type="DateTime" Precision="3" />
     <NavigationProperty Name="CLIENT" Relationship="Self.FK_CLIENTDO_RELATIONS_CLIENT" FromRole="CLIENTDOCUMENT" ToRole="CLIENT" />
@@ -85,12 +87,22 @@
     <Property Name="EMPLOYEEBANKINGDETAILS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="EMPLOYEEDATEEMPLOYED" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="EMPLOYEERENUMERATON" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-    <NavigationProperty Name="EMPLOYEEROLEs" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE" FromRole="EMPLOYEE" ToRole="EMPLOYEEROLE" />
+    <NavigationProperty Name="AUDITREPORTs" Relationship="Self.FK_AUDITREP_REFERENCE_EMPLOYEE" FromRole="EMPLOYEE" ToRole="AUDITREPORT" />
+    <NavigationProperty Name="EMPLOYEEPROPERTies" Relationship="Self.FK_EMPLOYEE_REFERENCE_EMPLOYEE" FromRole="EMPLOYEE" ToRole="EMPLOYEEPROPERTY" />
+    <NavigationProperty Name="EMPLOYEEROLEs" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE2" FromRole="EMPLOYEE" ToRole="EMPLOYEEROLE" />
     <NavigationProperty Name="USER" Relationship="Self.FK_EMPLOYEE_RELATIONS_USER" FromRole="EMPLOYEE" ToRole="USER" />
     <NavigationProperty Name="INSPECTIONs" Relationship="Self.FK_INSPECTI_RELATIONS_EMPLOYEE" FromRole="EMPLOYEE" ToRole="INSPECTION" />
-    <NavigationProperty Name="MANDATEs" Relationship="Self.FK_MANDATE_RELATIONS_EMPLOYEE" FromRole="EMPLOYEE" ToRole="MANDATE" />
-    <NavigationProperty Name="PROPERTies" Relationship="Self.FK_PROPERTY_RELATIONS_EMPLOYEE" FromRole="EMPLOYEE" ToRole="PROPERTY" />
     <NavigationProperty Name="VALUATIONs" Relationship="Self.FK_VALUATIO_RELATIONS_EMPLOYEE" FromRole="EMPLOYEE" ToRole="VALUATION" />
+  </EntityType>
+  <EntityType Name="EMPLOYEEPROPERTY">
+    <Key>
+      <PropertyRef Name="EMPLOYEEPROPERTYID" />
+    </Key>
+    <Property Name="EMPLOYEEPROPERTYID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
+    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_REFERENCE_EMPLOYEE" FromRole="EMPLOYEEPROPERTY" ToRole="EMPLOYEE" />
+    <NavigationProperty Name="PROPERTY" Relationship="Self.FK_EMPLOYEE_REFERENCE_PROPERTY" FromRole="EMPLOYEEPROPERTY" ToRole="PROPERTY" />
   </EntityType>
   <EntityType Name="EMPLOYEEROLE">
     <Key>
@@ -98,9 +110,9 @@
     </Key>
     <Property Name="EMPLOYEEROLEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EMPLOYEETYPEID" Type="Int32" Nullable="false" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE" FromRole="EMPLOYEEROLE" ToRole="EMPLOYEE" />
-    <NavigationProperty Name="EMPLOYEETYPE" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE2" FromRole="EMPLOYEEROLE" ToRole="EMPLOYEETYPE" />
+    <Property Name="USERID" Type="Int32" />
+    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE2" FromRole="EMPLOYEEROLE" ToRole="EMPLOYEE" />
+    <NavigationProperty Name="EMPLOYEETYPE" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE" FromRole="EMPLOYEEROLE" ToRole="EMPLOYEETYPE" />
   </EntityType>
   <EntityType Name="EMPLOYEETYPE">
     <Key>
@@ -108,7 +120,7 @@
     </Key>
     <Property Name="EMPLOYEETYPEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EMPLOYEETYPEDESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="EMPLOYEEROLEs" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE2" FromRole="EMPLOYEETYPE" ToRole="EMPLOYEEROLE" />
+    <NavigationProperty Name="EMPLOYEEROLEs" Relationship="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE" FromRole="EMPLOYEETYPE" ToRole="EMPLOYEEROLE" />
   </EntityType>
   <EntityType Name="FEATURE">
     <Key>
@@ -123,11 +135,11 @@
       <PropertyRef Name="INSPECTIONID" />
     </Key>
     <Property Name="INSPECTIONID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="INSPECTIONTYPEID" Type="Int32" Nullable="false" />
+    <Property Name="INSPECTIONTYPEID" Type="Int32" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
-    <Property Name="IVSTATUSID" Type="Int32" Nullable="false" />
-    <Property Name="INSPECTIONDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="IVSTATUSID" Type="Int32" />
+    <Property Name="USERID" Type="Int32" />
+    <Property Name="INSPECTIONDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
     <Property Name="INSPECTIONCOMMENT" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="INSPECTIONDATE" Type="DateTime" Precision="3" />
     <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_INSPECTI_RELATIONS_EMPLOYEE" FromRole="INSPECTION" ToRole="EMPLOYEE" />
@@ -158,8 +170,8 @@
       <PropertyRef Name="LISTINGPICTUREID" />
     </Key>
     <Property Name="LISTINGPICTUREID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="LISTINGPICTUREIMAGE" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="PROPERTYID" Type="Int32" />
+    <Property Name="LISTINGPICTUREIMAGE" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_LISTINGP_RELATIONS_PROPERTY" FromRole="LISTINGPICTURE" ToRole="PROPERTY" />
   </EntityType>
   <EntityType Name="MANDATE">
@@ -167,11 +179,9 @@
       <PropertyRef Name="MANDATEID" />
     </Key>
     <Property Name="MANDATEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="MANDATETYPEID" Type="Int32" Nullable="false" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <Property Name="MANDATETYPEID" Type="Int32" />
     <Property Name="MANDATEDATE" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="MANDATEDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_MANDATE_RELATIONS_EMPLOYEE" FromRole="MANDATE" ToRole="EMPLOYEE" />
+    <Property Name="MANDATEDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="MANDATETYPE" Relationship="Self.FK_MANDATE_RELATIONS_MANDATET" FromRole="MANDATE" ToRole="MANDATETYPE" />
     <NavigationProperty Name="PROPERTYMANDATEs" Relationship="Self.FK_PROPERTY_RELATIONS_MANDATE" FromRole="MANDATE" ToRole="PROPERTYMANDATE" />
   </EntityType>
@@ -204,7 +214,7 @@
       <PropertyRef Name="POINTOFINTERESTID" />
     </Key>
     <Property Name="POINTOFINTERESTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="POINTOFINTERESTTYPEID" Type="Int32" Nullable="false" />
+    <Property Name="POINTOFINTERESTTYPEID" Type="Int32" />
     <Property Name="POINTOFINTERESTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="POINTOFINTERESTTYPE" Relationship="Self.FK_POINTOFI_RELATIONS_POINTOFI" FromRole="POINTOFINTEREST" ToRole="POINTOFINTERESTTYPE" />
     <NavigationProperty Name="SUBURBPOINTOFINTERESTs" Relationship="Self.FK_SUBURBPO_RELATIONS_POINTOFI" FromRole="POINTOFINTEREST" ToRole="SUBURBPOINTOFINTEREST" />
@@ -222,7 +232,7 @@
       <PropertyRef Name="POTENTIALCLIENTID" />
     </Key>
     <Property Name="POTENTIALCLIENTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <Property Name="USERID" Type="Int32" />
     <Property Name="POTENTIALCLIENTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="POTENTIALCLIENTSURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="POTENTIALCLIENTCONTACTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
@@ -246,19 +256,19 @@
       <PropertyRef Name="PROPERTYID" />
     </Key>
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SUBURBID" Type="Int32" Nullable="false" />
-    <Property Name="MARKETTYPEID" Type="Int32" Nullable="false" />
-    <Property Name="PROPERTYSTATUSID" Type="Int32" Nullable="false" />
-    <Property Name="PROPERTYOWNERID" Type="Int32" Nullable="false" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
-    <Property Name="PROPERTYTYPEID" Type="Int32" Nullable="false" />
+    <Property Name="SUBURBID" Type="Int32" />
+    <Property Name="MARKETTYPEID" Type="Int32" />
+    <Property Name="PROPERTYSTATUSID" Type="Int32" />
+    <Property Name="PROPERTYOWNERID" Type="Int32" />
+    <Property Name="PROPERTYTYPEID" Type="Int32" />
     <Property Name="PROPERTYADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="ADVERTISEMENTs" Relationship="Self.FK_ADVERTIS_RELATIONS_PROPERTY" FromRole="PROPERTY" ToRole="ADVERTISEMENT" />
-    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_PROPERTY_RELATIONS_EMPLOYEE" FromRole="PROPERTY" ToRole="EMPLOYEE" />
+    <NavigationProperty Name="EMPLOYEEPROPERTies" Relationship="Self.FK_EMPLOYEE_REFERENCE_PROPERTY" FromRole="PROPERTY" ToRole="EMPLOYEEPROPERTY" />
     <NavigationProperty Name="INSPECTIONs" Relationship="Self.FK_INSPECTI_RELATIONS_PROPERTY" FromRole="PROPERTY" ToRole="INSPECTION" />
     <NavigationProperty Name="LISTINGPICTUREs" Relationship="Self.FK_LISTINGP_RELATIONS_PROPERTY" FromRole="PROPERTY" ToRole="LISTINGPICTURE" />
     <NavigationProperty Name="MARKETTYPE" Relationship="Self.FK_PROPERTY_RELATIONS_MARKETTY" FromRole="PROPERTY" ToRole="MARKETTYPE" />
     <NavigationProperty Name="PRICEs" Relationship="Self.FK_PRICE_RELATIONS_PROPERTY" FromRole="PROPERTY" ToRole="PRICE" />
+    <NavigationProperty Name="PROPERTYTERMs" Relationship="Self.FK_PROPERTY_REFERENCE_PROPERTY" FromRole="PROPERTY" ToRole="PROPERTYTERM" />
     <NavigationProperty Name="PROPERTYOTHERBUILDINGDETAILs" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY" FromRole="PROPERTY" ToRole="PROPERTYOTHERBUILDINGDETAIL" />
     <NavigationProperty Name="PROPERTYSTATU" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY2" FromRole="PROPERTY" ToRole="PROPERTYSTATUS" />
     <NavigationProperty Name="PROPERTYOWNER" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY3" FromRole="PROPERTY" ToRole="PROPERTYOWNER" />
@@ -279,13 +289,13 @@
       <PropertyRef Name="PROPERTYDEFECTID" />
     </Key>
     <Property Name="PROPERTYDEFECTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DEFECTID" Type="Int32" Nullable="false" />
+    <Property Name="DEFECTID" Type="Int32" />
     <Property Name="INSPECTIONID" Type="Int32" Nullable="false" />
-    <Property Name="SPACEID" Type="Int32" Nullable="false" />
+    <Property Name="SPACEID" Type="Int32" />
     <Property Name="PROPERTYDEFECTQUANTITY" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DEFECT" Relationship="Self.FK_PROPERTY_RELATIONS_DEFECT" FromRole="PROPERTYDEFECT" ToRole="DEFECT" />
     <NavigationProperty Name="INSPECTION" Relationship="Self.FK_PROPERTY_RELATIONS_INSPECTI" FromRole="PROPERTYDEFECT" ToRole="INSPECTION" />
-    <NavigationProperty Name="SPACE" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE" FromRole="PROPERTYDEFECT" ToRole="SPACE" />
+    <NavigationProperty Name="SPACE" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE2" FromRole="PROPERTYDEFECT" ToRole="SPACE" />
   </EntityType>
   <EntityType Name="PROPERTYDOCUMENT">
     <Key>
@@ -293,8 +303,8 @@
     </Key>
     <Property Name="PROPERTYDOCUMENTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="PROPERTYDOCUMENTTYPEID" Type="Int32" Nullable="false" />
-    <Property Name="PROPERTYDOCUMENT1" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="PROPERTYDOCUMENTTYPEID" Type="Int32" />
+    <Property Name="PROPERTYDOCUMENT1" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY5" FromRole="PROPERTYDOCUMENT" ToRole="PROPERTY" />
     <NavigationProperty Name="PROPERTYDOCUMENTTYPE" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY6" FromRole="PROPERTYDOCUMENT" ToRole="PROPERTYDOCUMENTTYPE" />
   </EntityType>
@@ -311,7 +321,7 @@
       <PropertyRef Name="PROPERTYFEATUREID" />
     </Key>
     <Property Name="PROPERTYFEATUREID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FEATUREID" Type="Int32" Nullable="false" />
+    <Property Name="FEATUREID" Type="Int32" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
     <Property Name="PROPERTYFEATUREQUANTITY" Type="Int32" Nullable="false" />
     <NavigationProperty Name="FEATURE" Relationship="Self.FK_PROPERTY_RELATIONS_FEATURE" FromRole="PROPERTYFEATURE" ToRole="FEATURE" />
@@ -345,10 +355,10 @@
     <Property Name="PROPERTYOWNERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PROPERTYOWNERSURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PROPERTYOWNEREMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="PROPERTYOWNERIDNUMBER" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PROPERTYOWNERIDNUMBER" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="PROPERTYOWNERPASSPORTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="PROPERTYOWNERADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="PROPERTYOWNERCONTACTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PROPERTYOWNERCONTACTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="PROPERTYOWNERALTCONTACTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="PROPERTies" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY3" FromRole="PROPERTYOWNER" ToRole="PROPERTY" />
   </EntityType>
@@ -357,11 +367,11 @@
       <PropertyRef Name="PROPERTYSPACEID" />
     </Key>
     <Property Name="PROPERTYSPACEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SPACEID" Type="Int32" Nullable="false" />
+    <Property Name="SPACEID" Type="Int32" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
     <Property Name="PROPERTYSPACEQUANTITY" Type="Int32" Nullable="false" />
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY8" FromRole="PROPERTYSPACE" ToRole="PROPERTY" />
-    <NavigationProperty Name="SPACE" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE2" FromRole="PROPERTYSPACE" ToRole="SPACE" />
+    <NavigationProperty Name="SPACE" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE" FromRole="PROPERTYSPACE" ToRole="SPACE" />
   </EntityType>
   <EntityType Name="PROPERTYSTATU">
     <Key>
@@ -370,6 +380,16 @@
     <Property Name="PROPERTYSTATUSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PROPERTYSTATUSDESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PROPERTies" Relationship="Self.FK_PROPERTY_RELATIONS_PROPERTY2" FromRole="PROPERTYSTATUS" ToRole="PROPERTY" />
+  </EntityType>
+  <EntityType Name="PROPERTYTERM">
+    <Key>
+      <PropertyRef Name="PROPERTYTERMID" />
+    </Key>
+    <Property Name="PROPERTYTERMID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
+    <Property Name="TERMID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PROPERTY" Relationship="Self.FK_PROPERTY_REFERENCE_PROPERTY" FromRole="PROPERTYTERM" ToRole="PROPERTY" />
+    <NavigationProperty Name="TERM" Relationship="Self.FK_PROPERTY_REFERENCE_TERM" FromRole="PROPERTYTERM" ToRole="TERM" />
   </EntityType>
   <EntityType Name="PROPERTYTYPE">
     <Key>
@@ -393,8 +413,8 @@
     </Key>
     <Property Name="PURCHASEOFFERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="PURCHASEOFFERSTATUSID" Type="Int32" Nullable="false" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <Property Name="PURCHASEOFFERSTATUSID" Type="Int32" />
+    <Property Name="USERID" Type="Int32" />
     <Property Name="OFFERAMOUNT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="OFFERDATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="OFFERDESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -416,12 +436,12 @@
     </Key>
     <Property Name="RENTALID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="RENTALTYPEID" Type="Int32" Nullable="false" />
-    <Property Name="RENTALSTATUSID" Type="Int32" Nullable="false" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <Property Name="RENTALTYPEID" Type="Int32" />
+    <Property Name="RENTALSTATUSID" Type="Int32" />
+    <Property Name="USERID" Type="Int32" />
     <Property Name="RENTALDATESTART" Type="DateTime" Precision="3" />
     <Property Name="RENTALDATEEND" Type="DateTime" Precision="3" />
-    <Property Name="RENTALAGREEMENTDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="RENTALAGREEMENTDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="CLIENT" Relationship="Self.FK_RENTAL_RELATIONS_CLIENT" FromRole="RENTAL" ToRole="CLIENT" />
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_RENTAL_RELATIONS_PROPERTY" FromRole="RENTAL" ToRole="PROPERTY" />
     <NavigationProperty Name="RENTALSTATU" Relationship="Self.FK_RENTAL_RELATIONS_RENTALST" FromRole="RENTAL" ToRole="RENTALSTATUS" />
@@ -433,11 +453,13 @@
     </Key>
     <Property Name="RENTALAPPLICATIONID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="USERID" Type="Int32" Nullable="false" />
-    <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="RENTALAPPLICATIONSTATUSID" Type="Int32" Nullable="false" />
+    <Property Name="PROPERTYID" Type="Int32" />
+    <Property Name="RENTALAPPLICATIONSTATUSID" Type="Int32" />
     <Property Name="RENTALAPPLICATIONDATE" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="RENTALAPPLICATIONDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="RENTALAPPLICATIONDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="RENTALAPPLICATIONNOTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RENTALAPPLICATIONTERM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RENTALAPPLICATIONSTARTDATE" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="CLIENT" Relationship="Self.FK_RENTALAP_RELATIONS_CLIENT" FromRole="RENTALAPPLICATION" ToRole="CLIENT" />
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_RENTALAP_RELATIONS_PROPERTY" FromRole="RENTALAPPLICATION" ToRole="PROPERTY" />
     <NavigationProperty Name="RENTALAPPLICATIONSTATU" Relationship="Self.FK_RENTALAP_RELATIONS_RENTALAP" FromRole="RENTALAPPLICATION" ToRole="RENTALAPPLICATIONSTATUS" />
@@ -474,7 +496,7 @@
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
     <Property Name="SALEDATECONCLUDED" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="SALEAMOUNT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-    <Property Name="SALEAGREEMENTDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="SALEAGREEMENTDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_SALE_RELATIONS_PROPERTY" FromRole="SALE" ToRole="PROPERTY" />
   </EntityType>
   <EntityType Name="SPACE">
@@ -482,10 +504,10 @@
       <PropertyRef Name="SPACEID" />
     </Key>
     <Property Name="SPACEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SPACETYPEID" Type="Int32" Nullable="false" />
+    <Property Name="SPACETYPEID" Type="Int32" />
     <Property Name="SPACEDESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="PROPERTYDEFECTs" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE" FromRole="SPACE" ToRole="PROPERTYDEFECT" />
-    <NavigationProperty Name="PROPERTYSPACEs" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE2" FromRole="SPACE" ToRole="PROPERTYSPACE" />
+    <NavigationProperty Name="PROPERTYDEFECTs" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE2" FromRole="SPACE" ToRole="PROPERTYDEFECT" />
+    <NavigationProperty Name="PROPERTYSPACEs" Relationship="Self.FK_PROPERTY_RELATIONS_SPACE" FromRole="SPACE" ToRole="PROPERTYSPACE" />
     <NavigationProperty Name="SPACETYPE" Relationship="Self.FK_SPACE_RELATIONS_SPACETYP" FromRole="SPACE" ToRole="SPACETYPE" />
   </EntityType>
   <EntityType Name="SPACETYPE">
@@ -501,7 +523,7 @@
       <PropertyRef Name="SUBURBID" />
     </Key>
     <Property Name="SUBURBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CITYID" Type="Int32" Nullable="false" />
+    <Property Name="CITYID" Type="Int32" />
     <Property Name="SUBURBNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="CITY" Relationship="Self.FK_SUBURB_RELATIONS_CITY" FromRole="SUBURB" ToRole="CITY" />
     <NavigationProperty Name="PROPERTies" Relationship="Self.FK_PROPERTY_RELATIONS_SUBURB" FromRole="SUBURB" ToRole="PROPERTY" />
@@ -517,13 +539,21 @@
     <NavigationProperty Name="POINTOFINTEREST" Relationship="Self.FK_SUBURBPO_RELATIONS_POINTOFI" FromRole="SUBURBPOINTOFINTEREST" ToRole="POINTOFINTEREST" />
     <NavigationProperty Name="SUBURB" Relationship="Self.FK_SUBURBPO_RELATIONS_SUBURB" FromRole="SUBURBPOINTOFINTEREST" ToRole="SUBURB" />
   </EntityType>
+  <EntityType Name="TERM">
+    <Key>
+      <PropertyRef Name="TERMID" />
+    </Key>
+    <Property Name="TERMID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TERMDESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PROPERTYTERMs" Relationship="Self.FK_PROPERTY_REFERENCE_TERM" FromRole="TERM" ToRole="PROPERTYTERM" />
+  </EntityType>
   <EntityType Name="USER">
     <Key>
       <PropertyRef Name="USERID" />
     </Key>
     <Property Name="USERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="USEREMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="USERPASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="USERPASSWORD" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
     <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USERSURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="USERCONTACTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -531,6 +561,8 @@
     <Property Name="USERIDNUMBER" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="USERPASSPORTNUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="USERADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USERGUID" Type="String" MaxLength="68" FixedLength="false" Unicode="false" />
+    <Property Name="USERGUIDEXPIRY" Type="DateTime" Precision="3" />
     <NavigationProperty Name="CLIENT" Relationship="Self.FK_CLIENT_RELATIONS_USER" FromRole="USER" ToRole="CLIENT" />
     <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_RELATIONS_USER" FromRole="USER" ToRole="EMPLOYEE" />
     <NavigationProperty Name="POTENTIALCLIENTs" Relationship="Self.FK_POTENTIA_RELATIONS_USER" FromRole="USER" ToRole="POTENTIALCLIENT" />
@@ -540,10 +572,10 @@
       <PropertyRef Name="VALUATIONID" />
     </Key>
     <Property Name="VALUATIONID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="USERID" Type="Int32" Nullable="false" />
-    <Property Name="IVSTATUSID" Type="Int32" Nullable="false" />
+    <Property Name="IVSTATUSID" Type="Int32" />
     <Property Name="PROPERTYID" Type="Int32" Nullable="false" />
-    <Property Name="VALUATIONDOCUMENT" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="USERID" Type="Int32" />
+    <Property Name="VALUATIONDOCUMENT" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
     <Property Name="VALUATIONDATE" Type="DateTime" Precision="3" />
     <Property Name="VALUATIONDESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="VALUATIONAMOUNT" Type="Decimal" Precision="10" Scale="2" />
@@ -552,7 +584,9 @@
     <NavigationProperty Name="PROPERTY" Relationship="Self.FK_VALUATIO_RELATIONS_PROPERTY" FromRole="VALUATION" ToRole="PROPERTY" />
   </EntityType>
   <Association Name="FK_ADVERTIS_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ADVERTISEMENT" Type="Self.ADVERTISEMENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -563,8 +597,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_AUDITREP_REFERENCE_EMPLOYEE">
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
+    <End Role="AUDITREPORT" Type="Self.AUDITREPORT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="AUDITREPORT">
+        <PropertyRef Name="USERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CITY_RELATIONS_PROVINCE">
-    <End Role="PROVINCE" Type="Self.PROVINCE" Multiplicity="1" />
+    <End Role="PROVINCE" Type="Self.PROVINCE" Multiplicity="0..1" />
     <End Role="CITY" Type="Self.CITY" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROVINCE">
@@ -576,7 +622,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SUBURB_RELATIONS_CITY">
-    <End Role="CITY" Type="Self.CITY" Multiplicity="1" />
+    <End Role="CITY" Type="Self.CITY" Multiplicity="0..1" />
     <End Role="SUBURB" Type="Self.SUBURB" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CITY">
@@ -588,7 +634,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CLIENT_RELATIONS_CLIENTTY">
-    <End Role="CLIENTTYPE" Type="Self.CLIENTTYPE" Multiplicity="1" />
+    <End Role="CLIENTTYPE" Type="Self.CLIENTTYPE" Multiplicity="0..1" />
     <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CLIENTTYPE">
@@ -600,7 +646,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CLIENT_RELATIONS_USER">
-    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="USER">
@@ -612,7 +660,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CLIENTDO_RELATIONS_CLIENT">
-    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="CLIENTDOCUMENT" Type="Self.CLIENTDOCUMENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CLIENT">
@@ -624,7 +674,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PURCHASE_RELATIONS_CLIENT">
-    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="0..1" />
     <End Role="PURCHASEOFFER" Type="Self.PURCHASEOFFER" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CLIENT">
@@ -636,7 +686,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTAL_RELATIONS_CLIENT">
-    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="0..1" />
     <End Role="RENTAL" Type="Self.RENTAL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CLIENT">
@@ -648,7 +698,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTALAP_RELATIONS_CLIENT">
-    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="RENTALAPPLICATION" Type="Self.RENTALAPPLICATION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CLIENT">
@@ -660,7 +712,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CLIENTDO_RELATIONS_CLIENTDO">
-    <End Role="CLIENTDOCUMENTTYPE" Type="Self.CLIENTDOCUMENTTYPE" Multiplicity="1" />
+    <End Role="CLIENTDOCUMENTTYPE" Type="Self.CLIENTDOCUMENTTYPE" Multiplicity="0..1" />
     <End Role="CLIENTDOCUMENT" Type="Self.CLIENTDOCUMENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CLIENTDOCUMENTTYPE">
@@ -672,7 +724,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_DEFECT">
-    <End Role="DEFECT" Type="Self.DEFECT" Multiplicity="1" />
+    <End Role="DEFECT" Type="Self.DEFECT" Multiplicity="0..1" />
     <End Role="PROPERTYDEFECT" Type="Self.PROPERTYDEFECT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DEFECT">
@@ -683,8 +735,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE">
-    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1" />
+  <Association Name="FK_EMPLOYEE_REFERENCE_EMPLOYEE">
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EMPLOYEEPROPERTY" Type="Self.EMPLOYEEPROPERTY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="EMPLOYEEPROPERTY">
+        <PropertyRef Name="USERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE2">
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="EMPLOYEEROLE" Type="Self.EMPLOYEEROLE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EMPLOYEE">
@@ -696,7 +764,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_EMPLOYEE_RELATIONS_USER">
-    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="USER">
@@ -708,7 +778,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_INSPECTI_RELATIONS_EMPLOYEE">
-    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
     <End Role="INSPECTION" Type="Self.INSPECTION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EMPLOYEE">
@@ -719,32 +789,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MANDATE_RELATIONS_EMPLOYEE">
-    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1" />
-    <End Role="MANDATE" Type="Self.MANDATE" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="EMPLOYEE">
-        <PropertyRef Name="USERID" />
-      </Principal>
-      <Dependent Role="MANDATE">
-        <PropertyRef Name="USERID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PROPERTY_RELATIONS_EMPLOYEE">
-    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1" />
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="EMPLOYEE">
-        <PropertyRef Name="USERID" />
-      </Principal>
-      <Dependent Role="PROPERTY">
-        <PropertyRef Name="USERID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_VALUATIO_RELATIONS_EMPLOYEE">
-    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
     <End Role="VALUATION" Type="Self.VALUATION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EMPLOYEE">
@@ -755,8 +801,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE2">
-    <End Role="EMPLOYEETYPE" Type="Self.EMPLOYEETYPE" Multiplicity="1" />
+  <Association Name="FK_EMPLOYEE_REFERENCE_PROPERTY">
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EMPLOYEEPROPERTY" Type="Self.EMPLOYEEPROPERTY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROPERTY">
+        <PropertyRef Name="PROPERTYID" />
+      </Principal>
+      <Dependent Role="EMPLOYEEPROPERTY">
+        <PropertyRef Name="PROPERTYID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE">
+    <End Role="EMPLOYEETYPE" Type="Self.EMPLOYEETYPE" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="EMPLOYEEROLE" Type="Self.EMPLOYEEROLE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EMPLOYEETYPE">
@@ -768,7 +830,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_FEATURE">
-    <End Role="FEATURE" Type="Self.FEATURE" Multiplicity="1" />
+    <End Role="FEATURE" Type="Self.FEATURE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYFEATURE" Type="Self.PROPERTYFEATURE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FEATURE">
@@ -780,7 +844,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_INSPECTI_RELATIONS_INSPECTI">
-    <End Role="INSPECTIONTYPE" Type="Self.INSPECTIONTYPE" Multiplicity="1" />
+    <End Role="INSPECTIONTYPE" Type="Self.INSPECTIONTYPE" Multiplicity="0..1" />
     <End Role="INSPECTION" Type="Self.INSPECTION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="INSPECTIONTYPE">
@@ -792,7 +856,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_INSPECTI_RELATIONS_IVSTATUS">
-    <End Role="IVSTATUS" Type="Self.IVSTATU" Multiplicity="1" />
+    <End Role="IVSTATUS" Type="Self.IVSTATU" Multiplicity="0..1" />
     <End Role="INSPECTION" Type="Self.INSPECTION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="IVSTATUS">
@@ -804,7 +868,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_INSPECTI_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="INSPECTION" Type="Self.INSPECTION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -816,7 +882,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_INSPECTI">
-    <End Role="INSPECTION" Type="Self.INSPECTION" Multiplicity="1" />
+    <End Role="INSPECTION" Type="Self.INSPECTION" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYDEFECT" Type="Self.PROPERTYDEFECT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="INSPECTION">
@@ -828,7 +896,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_VALUATIO_RELATIONS_IVSTATUS">
-    <End Role="IVSTATUS" Type="Self.IVSTATU" Multiplicity="1" />
+    <End Role="IVSTATUS" Type="Self.IVSTATU" Multiplicity="0..1" />
     <End Role="VALUATION" Type="Self.VALUATION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="IVSTATUS">
@@ -840,7 +908,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_LISTINGP_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="LISTINGPICTURE" Type="Self.LISTINGPICTURE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -852,7 +922,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MANDATE_RELATIONS_MANDATET">
-    <End Role="MANDATETYPE" Type="Self.MANDATETYPE" Multiplicity="1" />
+    <End Role="MANDATETYPE" Type="Self.MANDATETYPE" Multiplicity="0..1" />
     <End Role="MANDATE" Type="Self.MANDATE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MANDATETYPE">
@@ -864,7 +934,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_MANDATE">
-    <End Role="MANDATE" Type="Self.MANDATE" Multiplicity="1" />
+    <End Role="MANDATE" Type="Self.MANDATE" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYMANDATE" Type="Self.PROPERTYMANDATE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MANDATE">
@@ -876,7 +948,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_MARKETTY">
-    <End Role="MARKETTYPE" Type="Self.MARKETTYPE" Multiplicity="1" />
+    <End Role="MARKETTYPE" Type="Self.MARKETTYPE" Multiplicity="0..1" />
     <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MARKETTYPE">
@@ -888,7 +960,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_OTHERBUI">
-    <End Role="OTHERBUILDINGDETAIL" Type="Self.OTHERBUILDINGDETAIL" Multiplicity="1" />
+    <End Role="OTHERBUILDINGDETAIL" Type="Self.OTHERBUILDINGDETAIL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYOTHERBUILDINGDETAIL" Type="Self.PROPERTYOTHERBUILDINGDETAIL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="OTHERBUILDINGDETAIL">
@@ -900,7 +974,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_POINTOFI_RELATIONS_POINTOFI">
-    <End Role="POINTOFINTERESTTYPE" Type="Self.POINTOFINTERESTTYPE" Multiplicity="1" />
+    <End Role="POINTOFINTERESTTYPE" Type="Self.POINTOFINTERESTTYPE" Multiplicity="0..1" />
     <End Role="POINTOFINTEREST" Type="Self.POINTOFINTEREST" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="POINTOFINTERESTTYPE">
@@ -912,7 +986,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SUBURBPO_RELATIONS_POINTOFI">
-    <End Role="POINTOFINTEREST" Type="Self.POINTOFINTEREST" Multiplicity="1" />
+    <End Role="POINTOFINTEREST" Type="Self.POINTOFINTEREST" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SUBURBPOINTOFINTEREST" Type="Self.SUBURBPOINTOFINTEREST" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="POINTOFINTEREST">
@@ -924,7 +1000,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_POTENTIA_RELATIONS_USER">
-    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="POTENTIALCLIENT" Type="Self.POTENTIALCLIENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USER">
@@ -936,7 +1014,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PRICE_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PRICE" Type="Self.PRICE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -947,8 +1027,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PROPERTY_REFERENCE_PROPERTY">
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PROPERTYTERM" Type="Self.PROPERTYTERM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROPERTY">
+        <PropertyRef Name="PROPERTYID" />
+      </Principal>
+      <Dependent Role="PROPERTYTERM">
+        <PropertyRef Name="PROPERTYID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYOTHERBUILDINGDETAIL" Type="Self.PROPERTYOTHERBUILDINGDETAIL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -960,7 +1056,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY2">
-    <End Role="PROPERTYSTATUS" Type="Self.PROPERTYSTATU" Multiplicity="1" />
+    <End Role="PROPERTYSTATUS" Type="Self.PROPERTYSTATU" Multiplicity="0..1" />
     <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTYSTATUS">
@@ -972,7 +1068,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY3">
-    <End Role="PROPERTYOWNER" Type="Self.PROPERTYOWNER" Multiplicity="1" />
+    <End Role="PROPERTYOWNER" Type="Self.PROPERTYOWNER" Multiplicity="0..1" />
     <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTYOWNER">
@@ -984,7 +1080,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY4">
-    <End Role="PROPERTYTYPE" Type="Self.PROPERTYTYPE" Multiplicity="1" />
+    <End Role="PROPERTYTYPE" Type="Self.PROPERTYTYPE" Multiplicity="0..1" />
     <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTYTYPE">
@@ -996,7 +1092,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY5">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYDOCUMENT" Type="Self.PROPERTYDOCUMENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1008,7 +1106,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY7">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYMANDATE" Type="Self.PROPERTYMANDATE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1020,7 +1120,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY8">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYSPACE" Type="Self.PROPERTYSPACE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1032,7 +1134,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY9">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PROPERTYFEATURE" Type="Self.PROPERTYFEATURE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1044,7 +1148,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_SUBURB">
-    <End Role="SUBURB" Type="Self.SUBURB" Multiplicity="1" />
+    <End Role="SUBURB" Type="Self.SUBURB" Multiplicity="0..1" />
     <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SUBURB">
@@ -1056,7 +1160,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PURCHASE_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="PURCHASEOFFER" Type="Self.PURCHASEOFFER" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1068,7 +1174,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTAL_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="RENTAL" Type="Self.RENTAL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1080,7 +1188,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTALAP_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="0..1" />
     <End Role="RENTALAPPLICATION" Type="Self.RENTALAPPLICATION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1092,7 +1200,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SALE_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SALE" Type="Self.SALE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1104,7 +1214,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_VALUATIO_RELATIONS_PROPERTY">
-    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1" />
+    <End Role="PROPERTY" Type="Self.PROPERTY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="VALUATION" Type="Self.VALUATION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTY">
@@ -1115,8 +1227,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PROPERTY_RELATIONS_SPACE">
-    <End Role="SPACE" Type="Self.SPACE" Multiplicity="1" />
+  <Association Name="FK_PROPERTY_RELATIONS_SPACE2">
+    <End Role="SPACE" Type="Self.SPACE" Multiplicity="0..1" />
     <End Role="PROPERTYDEFECT" Type="Self.PROPERTYDEFECT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SPACE">
@@ -1128,7 +1240,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PROPERTY_RELATIONS_PROPERTY6">
-    <End Role="PROPERTYDOCUMENTTYPE" Type="Self.PROPERTYDOCUMENTTYPE" Multiplicity="1" />
+    <End Role="PROPERTYDOCUMENTTYPE" Type="Self.PROPERTYDOCUMENTTYPE" Multiplicity="0..1" />
     <End Role="PROPERTYDOCUMENT" Type="Self.PROPERTYDOCUMENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PROPERTYDOCUMENTTYPE">
@@ -1139,8 +1251,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PROPERTY_RELATIONS_SPACE2">
-    <End Role="SPACE" Type="Self.SPACE" Multiplicity="1" />
+  <Association Name="FK_PROPERTY_RELATIONS_SPACE">
+    <End Role="SPACE" Type="Self.SPACE" Multiplicity="0..1" />
     <End Role="PROPERTYSPACE" Type="Self.PROPERTYSPACE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SPACE">
@@ -1151,8 +1263,22 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PROPERTY_REFERENCE_TERM">
+    <End Role="TERM" Type="Self.TERM" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PROPERTYTERM" Type="Self.PROPERTYTERM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TERM">
+        <PropertyRef Name="TERMID" />
+      </Principal>
+      <Dependent Role="PROPERTYTERM">
+        <PropertyRef Name="TERMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PURCHASE_RELATIONS_PURCHASE">
-    <End Role="PURCHASEOFFERSTATUS" Type="Self.PURCHASEOFFERSTATU" Multiplicity="1" />
+    <End Role="PURCHASEOFFERSTATUS" Type="Self.PURCHASEOFFERSTATU" Multiplicity="0..1" />
     <End Role="PURCHASEOFFER" Type="Self.PURCHASEOFFER" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PURCHASEOFFERSTATUS">
@@ -1164,7 +1290,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTAL_RELATIONS_RENTALST">
-    <End Role="RENTALSTATUS" Type="Self.RENTALSTATU" Multiplicity="1" />
+    <End Role="RENTALSTATUS" Type="Self.RENTALSTATU" Multiplicity="0..1" />
     <End Role="RENTAL" Type="Self.RENTAL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RENTALSTATUS">
@@ -1176,7 +1302,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTAL_RELATIONS_RENTALTY">
-    <End Role="RENTALTYPE" Type="Self.RENTALTYPE" Multiplicity="1" />
+    <End Role="RENTALTYPE" Type="Self.RENTALTYPE" Multiplicity="0..1" />
     <End Role="RENTAL" Type="Self.RENTAL" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RENTALTYPE">
@@ -1188,7 +1314,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RENTALAP_RELATIONS_RENTALAP">
-    <End Role="RENTALAPPLICATIONSTATUS" Type="Self.RENTALAPPLICATIONSTATU" Multiplicity="1" />
+    <End Role="RENTALAPPLICATIONSTATUS" Type="Self.RENTALAPPLICATIONSTATU" Multiplicity="0..1" />
     <End Role="RENTALAPPLICATION" Type="Self.RENTALAPPLICATION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RENTALAPPLICATIONSTATUS">
@@ -1200,7 +1326,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SPACE_RELATIONS_SPACETYP">
-    <End Role="SPACETYPE" Type="Self.SPACETYPE" Multiplicity="1" />
+    <End Role="SPACETYPE" Type="Self.SPACETYPE" Multiplicity="0..1" />
     <End Role="SPACE" Type="Self.SPACE" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SPACETYPE">
@@ -1212,7 +1338,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SUBURBPO_RELATIONS_SUBURB">
-    <End Role="SUBURB" Type="Self.SUBURB" Multiplicity="1" />
+    <End Role="SUBURB" Type="Self.SUBURB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SUBURBPOINTOFINTEREST" Type="Self.SUBURBPOINTOFINTEREST" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SUBURB">
@@ -1223,7 +1351,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="BlackGoldDBEntities5" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="BlackGoldDBEntities10" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="ADVERTISEMENTs" EntityType="Self.ADVERTISEMENT" />
     <EntitySet Name="AUDITREPORTs" EntityType="Self.AUDITREPORT" />
     <EntitySet Name="CITies" EntityType="Self.CITY" />
@@ -1233,6 +1361,7 @@
     <EntitySet Name="CLIENTTYPEs" EntityType="Self.CLIENTTYPE" />
     <EntitySet Name="DEFECTs" EntityType="Self.DEFECT" />
     <EntitySet Name="EMPLOYEEs" EntityType="Self.EMPLOYEE" />
+    <EntitySet Name="EMPLOYEEPROPERTies" EntityType="Self.EMPLOYEEPROPERTY" />
     <EntitySet Name="EMPLOYEEROLEs" EntityType="Self.EMPLOYEEROLE" />
     <EntitySet Name="EMPLOYEETYPEs" EntityType="Self.EMPLOYEETYPE" />
     <EntitySet Name="FEATUREs" EntityType="Self.FEATURE" />
@@ -1258,6 +1387,7 @@
     <EntitySet Name="PROPERTYOWNERs" EntityType="Self.PROPERTYOWNER" />
     <EntitySet Name="PROPERTYSPACEs" EntityType="Self.PROPERTYSPACE" />
     <EntitySet Name="PROPERTYSTATUS" EntityType="Self.PROPERTYSTATU" />
+    <EntitySet Name="PROPERTYTERMs" EntityType="Self.PROPERTYTERM" />
     <EntitySet Name="PROPERTYTYPEs" EntityType="Self.PROPERTYTYPE" />
     <EntitySet Name="PROVINCEs" EntityType="Self.PROVINCE" />
     <EntitySet Name="PURCHASEOFFERs" EntityType="Self.PURCHASEOFFER" />
@@ -1272,11 +1402,16 @@
     <EntitySet Name="SPACETYPEs" EntityType="Self.SPACETYPE" />
     <EntitySet Name="SUBURBs" EntityType="Self.SUBURB" />
     <EntitySet Name="SUBURBPOINTOFINTERESTs" EntityType="Self.SUBURBPOINTOFINTEREST" />
+    <EntitySet Name="TERMs" EntityType="Self.TERM" />
     <EntitySet Name="USERs" EntityType="Self.USER" />
     <EntitySet Name="VALUATIONs" EntityType="Self.VALUATION" />
     <AssociationSet Name="FK_ADVERTIS_RELATIONS_PROPERTY" Association="Self.FK_ADVERTIS_RELATIONS_PROPERTY">
       <End Role="PROPERTY" EntitySet="PROPERTies" />
       <End Role="ADVERTISEMENT" EntitySet="ADVERTISEMENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AUDITREP_REFERENCE_EMPLOYEE" Association="Self.FK_AUDITREP_REFERENCE_EMPLOYEE">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+      <End Role="AUDITREPORT" EntitySet="AUDITREPORTs" />
     </AssociationSet>
     <AssociationSet Name="FK_CITY_RELATIONS_PROVINCE" Association="Self.FK_CITY_RELATIONS_PROVINCE">
       <End Role="PROVINCE" EntitySet="PROVINCEs" />
@@ -1318,7 +1453,11 @@
       <End Role="DEFECT" EntitySet="DEFECTs" />
       <End Role="PROPERTYDEFECT" EntitySet="PROPERTYDEFECTs" />
     </AssociationSet>
-    <AssociationSet Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE" Association="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE">
+    <AssociationSet Name="FK_EMPLOYEE_REFERENCE_EMPLOYEE" Association="Self.FK_EMPLOYEE_REFERENCE_EMPLOYEE">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+      <End Role="EMPLOYEEPROPERTY" EntitySet="EMPLOYEEPROPERTies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE2" Association="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE2">
       <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
       <End Role="EMPLOYEEROLE" EntitySet="EMPLOYEEROLEs" />
     </AssociationSet>
@@ -1330,19 +1469,15 @@
       <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
       <End Role="INSPECTION" EntitySet="INSPECTIONs" />
     </AssociationSet>
-    <AssociationSet Name="FK_MANDATE_RELATIONS_EMPLOYEE" Association="Self.FK_MANDATE_RELATIONS_EMPLOYEE">
-      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
-      <End Role="MANDATE" EntitySet="MANDATEs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PROPERTY_RELATIONS_EMPLOYEE" Association="Self.FK_PROPERTY_RELATIONS_EMPLOYEE">
-      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
-      <End Role="PROPERTY" EntitySet="PROPERTies" />
-    </AssociationSet>
     <AssociationSet Name="FK_VALUATIO_RELATIONS_EMPLOYEE" Association="Self.FK_VALUATIO_RELATIONS_EMPLOYEE">
       <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
       <End Role="VALUATION" EntitySet="VALUATIONs" />
     </AssociationSet>
-    <AssociationSet Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE2" Association="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE2">
+    <AssociationSet Name="FK_EMPLOYEE_REFERENCE_PROPERTY" Association="Self.FK_EMPLOYEE_REFERENCE_PROPERTY">
+      <End Role="PROPERTY" EntitySet="PROPERTies" />
+      <End Role="EMPLOYEEPROPERTY" EntitySet="EMPLOYEEPROPERTies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLOYEE_RELATIONS_EMPLOYEE" Association="Self.FK_EMPLOYEE_RELATIONS_EMPLOYEE">
       <End Role="EMPLOYEETYPE" EntitySet="EMPLOYEETYPEs" />
       <End Role="EMPLOYEEROLE" EntitySet="EMPLOYEEROLEs" />
     </AssociationSet>
@@ -1406,6 +1541,10 @@
       <End Role="PROPERTY" EntitySet="PROPERTies" />
       <End Role="PRICE" EntitySet="PRICEs" />
     </AssociationSet>
+    <AssociationSet Name="FK_PROPERTY_REFERENCE_PROPERTY" Association="Self.FK_PROPERTY_REFERENCE_PROPERTY">
+      <End Role="PROPERTY" EntitySet="PROPERTies" />
+      <End Role="PROPERTYTERM" EntitySet="PROPERTYTERMs" />
+    </AssociationSet>
     <AssociationSet Name="FK_PROPERTY_RELATIONS_PROPERTY" Association="Self.FK_PROPERTY_RELATIONS_PROPERTY">
       <End Role="PROPERTY" EntitySet="PROPERTies" />
       <End Role="PROPERTYOTHERBUILDINGDETAIL" EntitySet="PROPERTYOTHERBUILDINGDETAILs" />
@@ -1462,7 +1601,7 @@
       <End Role="PROPERTY" EntitySet="PROPERTies" />
       <End Role="VALUATION" EntitySet="VALUATIONs" />
     </AssociationSet>
-    <AssociationSet Name="FK_PROPERTY_RELATIONS_SPACE" Association="Self.FK_PROPERTY_RELATIONS_SPACE">
+    <AssociationSet Name="FK_PROPERTY_RELATIONS_SPACE2" Association="Self.FK_PROPERTY_RELATIONS_SPACE2">
       <End Role="SPACE" EntitySet="SPACEs" />
       <End Role="PROPERTYDEFECT" EntitySet="PROPERTYDEFECTs" />
     </AssociationSet>
@@ -1470,9 +1609,13 @@
       <End Role="PROPERTYDOCUMENTTYPE" EntitySet="PROPERTYDOCUMENTTYPEs" />
       <End Role="PROPERTYDOCUMENT" EntitySet="PROPERTYDOCUMENTs" />
     </AssociationSet>
-    <AssociationSet Name="FK_PROPERTY_RELATIONS_SPACE2" Association="Self.FK_PROPERTY_RELATIONS_SPACE2">
+    <AssociationSet Name="FK_PROPERTY_RELATIONS_SPACE" Association="Self.FK_PROPERTY_RELATIONS_SPACE">
       <End Role="SPACE" EntitySet="SPACEs" />
       <End Role="PROPERTYSPACE" EntitySet="PROPERTYSPACEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROPERTY_REFERENCE_TERM" Association="Self.FK_PROPERTY_REFERENCE_TERM">
+      <End Role="TERM" EntitySet="TERMs" />
+      <End Role="PROPERTYTERM" EntitySet="PROPERTYTERMs" />
     </AssociationSet>
     <AssociationSet Name="FK_PURCHASE_RELATIONS_PURCHASE" Association="Self.FK_PURCHASE_RELATIONS_PURCHASE">
       <End Role="PURCHASEOFFERSTATUS" EntitySet="PURCHASEOFFERSTATUS" />

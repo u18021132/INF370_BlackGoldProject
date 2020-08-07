@@ -24,7 +24,7 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int USERID { get; set; }
-        public int CLIENTTYPEID { get; set; }
+        public Nullable<int> CLIENTTYPEID { get; set; }
     
         public virtual CLIENTTYPE CLIENTTYPE { get; set; }
         public virtual USER USER { get; set; }

@@ -15,9 +15,9 @@ namespace BlackGoldProperties_API.Models
     public partial class PROPERTYDEFECT
     {
         public int PROPERTYDEFECTID { get; set; }
-        public int DEFECTID { get; set; }
+        public Nullable<int> DEFECTID { get; set; }
         public int INSPECTIONID { get; set; }
-        public int SPACEID { get; set; }
+        public Nullable<int> SPACEID { get; set; }
         public int PROPERTYDEFECTQUANTITY { get; set; }
     
         public virtual DEFECT DEFECT { get; set; }

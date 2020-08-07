@@ -21,7 +21,7 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int CITYID { get; set; }
-        public int PROVINCEID { get; set; }
+        public Nullable<int> PROVINCEID { get; set; }
         public string CITYNAME { get; set; }
     
         public virtual PROVINCE PROVINCE { get; set; }

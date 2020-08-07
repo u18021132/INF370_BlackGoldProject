@@ -15,7 +15,10 @@ namespace BlackGoldProperties_API.Models
     public partial class AUDITREPORT
     {
         public int AUDITREPORTID { get; set; }
+        public Nullable<int> USERID { get; set; }
         public System.DateTime AUDITREPORTDATE { get; set; }
-        public byte[] AUDITREPORTDOCUMENT { get; set; }
+        public string AUDITREPORTDOCUMENT { get; set; }
+    
+        public virtual EMPLOYEE EMPLOYEE { get; set; }
     }
 }

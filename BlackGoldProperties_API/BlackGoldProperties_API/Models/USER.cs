@@ -30,6 +30,8 @@ namespace BlackGoldProperties_API.Models
         public string USERIDNUMBER { get; set; }
         public string USERPASSPORTNUMBER { get; set; }
         public string USERADDRESS { get; set; }
+        public string USERGUID { get; set; }
+        public Nullable<System.DateTime> USERGUIDEXPIRY { get; set; }
     
         public virtual CLIENT CLIENT { get; set; }
         public virtual EMPLOYEE EMPLOYEE { get; set; }

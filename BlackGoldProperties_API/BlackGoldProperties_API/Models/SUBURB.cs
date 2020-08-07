@@ -22,7 +22,7 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int SUBURBID { get; set; }
-        public int CITYID { get; set; }
+        public Nullable<int> CITYID { get; set; }
         public string SUBURBNAME { get; set; }
     
         public virtual CITY CITY { get; set; }

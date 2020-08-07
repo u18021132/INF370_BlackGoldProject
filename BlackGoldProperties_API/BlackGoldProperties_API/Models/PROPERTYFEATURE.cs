@@ -15,7 +15,7 @@ namespace BlackGoldProperties_API.Models
     public partial class PROPERTYFEATURE
     {
         public int PROPERTYFEATUREID { get; set; }
-        public int FEATUREID { get; set; }
+        public Nullable<int> FEATUREID { get; set; }
         public int PROPERTYID { get; set; }
         public int PROPERTYFEATUREQUANTITY { get; set; }
     

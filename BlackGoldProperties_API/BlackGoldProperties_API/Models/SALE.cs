@@ -18,7 +18,7 @@ namespace BlackGoldProperties_API.Models
         public int PROPERTYID { get; set; }
         public System.DateTime SALEDATECONCLUDED { get; set; }
         public decimal SALEAMOUNT { get; set; }
-        public byte[] SALEAGREEMENTDOCUMENT { get; set; }
+        public string SALEAGREEMENTDOCUMENT { get; set; }
     
         public virtual PROPERTY PROPERTY { get; set; }
     }

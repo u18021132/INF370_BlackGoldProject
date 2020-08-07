@@ -16,7 +16,7 @@ namespace BlackGoldProperties_API.Models
     {
         public int EMPLOYEEROLEID { get; set; }
         public int EMPLOYEETYPEID { get; set; }
-        public int USERID { get; set; }
+        public Nullable<int> USERID { get; set; }
     
         public virtual EMPLOYEE EMPLOYEE { get; set; }
         public virtual EMPLOYEETYPE EMPLOYEETYPE { get; set; }

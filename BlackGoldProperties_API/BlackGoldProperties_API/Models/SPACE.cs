@@ -22,7 +22,7 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int SPACEID { get; set; }
-        public int SPACETYPEID { get; set; }
+        public Nullable<int> SPACETYPEID { get; set; }
         public string SPACEDESCRIPTION { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

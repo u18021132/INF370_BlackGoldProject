@@ -21,12 +21,10 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int MANDATEID { get; set; }
-        public int MANDATETYPEID { get; set; }
-        public int USERID { get; set; }
+        public Nullable<int> MANDATETYPEID { get; set; }
         public System.DateTime MANDATEDATE { get; set; }
-        public byte[] MANDATEDOCUMENT { get; set; }
+        public string MANDATEDOCUMENT { get; set; }
     
-        public virtual EMPLOYEE EMPLOYEE { get; set; }
         public virtual MANDATETYPE MANDATETYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PROPERTYMANDATE> PROPERTYMANDATEs { get; set; }

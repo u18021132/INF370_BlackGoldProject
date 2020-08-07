@@ -16,8 +16,8 @@ namespace BlackGoldProperties_API.Models
     {
         public int PURCHASEOFFERID { get; set; }
         public int PROPERTYID { get; set; }
-        public int PURCHASEOFFERSTATUSID { get; set; }
-        public int USERID { get; set; }
+        public Nullable<int> PURCHASEOFFERSTATUSID { get; set; }
+        public Nullable<int> USERID { get; set; }
         public decimal OFFERAMOUNT { get; set; }
         public System.DateTime OFFERDATE { get; set; }
         public string OFFERDESCRIPTION { get; set; }

@@ -21,7 +21,7 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int POINTOFINTERESTID { get; set; }
-        public int POINTOFINTERESTTYPEID { get; set; }
+        public Nullable<int> POINTOFINTERESTTYPEID { get; set; }
         public string POINTOFINTERESTNAME { get; set; }
     
         public virtual POINTOFINTERESTTYPE POINTOFINTERESTTYPE { get; set; }

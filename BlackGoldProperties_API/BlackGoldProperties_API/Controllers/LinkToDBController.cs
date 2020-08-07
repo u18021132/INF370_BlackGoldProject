@@ -5,11 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BlackGoldProperties_API.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace BlackGoldProperties_API.Controllers
 {
     public class LinkToDBController : ApiController
     {
-        public static BlackGoldDBEntities5 db = new BlackGoldDBEntities5();
+        /* Make any changes to the UserModel class as well */
+        public static BlackGoldDBEntities10 db = new BlackGoldDBEntities10();
     }
 }

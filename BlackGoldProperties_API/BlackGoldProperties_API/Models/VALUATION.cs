@@ -15,10 +15,10 @@ namespace BlackGoldProperties_API.Models
     public partial class VALUATION
     {
         public int VALUATIONID { get; set; }
-        public int USERID { get; set; }
-        public int IVSTATUSID { get; set; }
+        public Nullable<int> IVSTATUSID { get; set; }
         public int PROPERTYID { get; set; }
-        public byte[] VALUATIONDOCUMENT { get; set; }
+        public Nullable<int> USERID { get; set; }
+        public string VALUATIONDOCUMENT { get; set; }
         public Nullable<System.DateTime> VALUATIONDATE { get; set; }
         public string VALUATIONDESCRIPTION { get; set; }
         public Nullable<decimal> VALUATIONAMOUNT { get; set; }

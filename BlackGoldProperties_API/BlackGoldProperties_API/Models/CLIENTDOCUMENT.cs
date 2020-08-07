@@ -16,8 +16,8 @@ namespace BlackGoldProperties_API.Models
     {
         public int CLIENTDOCUMENTID { get; set; }
         public int USERID { get; set; }
-        public int CLIENTDOCUMENTTYPEID { get; set; }
-        public byte[] CLIENTDOCUMENT1 { get; set; }
+        public Nullable<int> CLIENTDOCUMENTTYPEID { get; set; }
+        public string CLIENTDOCUMENT1 { get; set; }
         public System.DateTime CLIENTDOCUMENTUPLOADDATE { get; set; }
         public Nullable<System.DateTime> CLIENTDOCUMENTUPLOADEXPIRY { get; set; }
     

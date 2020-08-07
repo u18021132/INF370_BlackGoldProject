@@ -21,11 +21,11 @@ namespace BlackGoldProperties_API.Models
         }
     
         public int INSPECTIONID { get; set; }
-        public int INSPECTIONTYPEID { get; set; }
+        public Nullable<int> INSPECTIONTYPEID { get; set; }
         public int PROPERTYID { get; set; }
-        public int USERID { get; set; }
-        public int IVSTATUSID { get; set; }
-        public byte[] INSPECTIONDOCUMENT { get; set; }
+        public Nullable<int> IVSTATUSID { get; set; }
+        public Nullable<int> USERID { get; set; }
+        public string INSPECTIONDOCUMENT { get; set; }
         public string INSPECTIONCOMMENT { get; set; }
         public Nullable<System.DateTime> INSPECTIONDATE { get; set; }
     

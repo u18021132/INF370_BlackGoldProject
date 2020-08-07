@@ -15,7 +15,7 @@ namespace BlackGoldProperties_API.Models
     public partial class POTENTIALCLIENT
     {
         public int POTENTIALCLIENTID { get; set; }
-        public int USERID { get; set; }
+        public Nullable<int> USERID { get; set; }
         public string POTENTIALCLIENTNAME { get; set; }
         public string POTENTIALCLIENTSURNAME { get; set; }
         public string POTENTIALCLIENTCONTACTNUMBER { get; set; }

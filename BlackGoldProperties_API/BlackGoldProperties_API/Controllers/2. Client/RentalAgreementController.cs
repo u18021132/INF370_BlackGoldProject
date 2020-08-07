@@ -11,7 +11,7 @@ namespace BlackGoldProperties_API.Controllers._2._Client
 {
     public class RentalAgreementController : ApiController
     {
-        //READ ALL DATA//    
+        //READ ALL DATA//       --- FIX: This should only return clients rental agreements
         [HttpGet]
         [Route("api/rentalagreement")]
         public IHttpActionResult Get()
@@ -100,9 +100,9 @@ namespace BlackGoldProperties_API.Controllers._2._Client
         }
 
         //Accept/Reject Rental Agreement//  --signed rental agreement doc to be uploaded
-        [HttpPost]
+        [HttpPatch]
         [Route("api/rentalagreement")]
-        public IHttpActionResult Post([FromUri] int propertyid, [FromUri] bool accepted, [FromUri] int term, [FromUri] DateTime start)  //--Last 2 parameters to be removed.. see comment below
+        public IHttpActionResult Patch([FromUri] int propertyid, [FromUri] bool accepted, [FromUri] int term, [FromUri] DateTime start)  //--Last 2 parameters to be removed.. see comment below
         {
             try
             {
@@ -161,10 +161,10 @@ namespace BlackGoldProperties_API.Controllers._2._Client
 
 
         //Extend/Terminate Rental Agreement//  
-        [HttpPatch]
+        [HttpPost]
         [Route("api/rentalagreement")]
 
-        public IHttpActionResult Patch([FromUri] int propertyid, [FromUri] string request)
+        public IHttpActionResult Post([FromUri] int propertyid, [FromUri] bool terminate, [FromUri] bool extend)
         {
             try
             {
@@ -172,17 +172,27 @@ namespace BlackGoldProperties_API.Controllers._2._Client
                 var db = LinkToDBController.db;
                 var rental = db.RENTALs.FirstOrDefault(x => x.PROPERTYID == propertyid);
 
+
                 //Null checks
-                if (string.IsNullOrEmpty(request))
-                    return BadRequest();
+                //if (string.IsNullOrEmpty(request))
+                //return BadRequest();
+                if (rental == null)
+                    return NotFound();
 
+                    if ( terminate == true)
+                    {
+                        rental.RENTALSTATUSID = 4; //Sets to 'Pending Termination'
+                    }
                 
-                //---FINISH CODE HERE
+                    if (extend == true)
+                    {
+                        rental.RENTALSTATUSID = 3; //Sets to 'Pending Extension'
+                    }
 
-                //Save DB changes
-                db.SaveChanges();
+                    //Save DB changes
+                    db.SaveChanges();
 
-                //Return ok
+                    //Return ok
                 return Ok();
             }
             catch (Exception)

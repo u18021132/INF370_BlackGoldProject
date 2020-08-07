@@ -12,7 +12,7 @@ namespace BlackGoldProperties_API.Controllers._2._Client
     public class RegisterClientController : ApiController
     {
         [HttpPost] 
-        [Route("api/registerclient")]   
+        [Route("api/registerclient")]   // --Add try-catch
         public IHttpActionResult Post([FromUri] string email, [FromUri] string name, [FromUri] string surname, [FromUri] string contactnumber, [FromUri] string altcontactnumber, [FromUri] string address, [FromUri] string password, [FromUri] string idnumber, [FromUri] string passportnumber)
         {
 
@@ -43,19 +43,21 @@ namespace BlackGoldProperties_API.Controllers._2._Client
                 //Save DB Changes
                 db.SaveChanges();
             }
-
+                        
             //Add a client 
             db.USERs.Add(new USER
             {
                USEREMAIL = email,
-               USERPASSWORD = password, //change this to be hashed
+               USERPASSWORD = HomeController.HashPassword(password),
                USERNAME = name,
                USERSURNAME = surname,
                USERCONTACTNUMBER = contactnumber,
                USERALTCONTACTNUMBER = altcontactnumber,
                USERIDNUMBER = idnumber,
                USERPASSPORTNUMBER = passportnumber,
-               USERADDRESS = address
+               USERADDRESS = address,
+               USERGUID = HomeController.GUIDActions().USERGUID,
+               USERGUIDEXPIRY = HomeController.GUIDActions().USERGUIDEXPIRY
             });
 
             //Save DB changes
@@ -77,8 +79,13 @@ namespace BlackGoldProperties_API.Controllers._2._Client
             //Save DB changes
             db.SaveChanges();
 
+            //Log user in
+            var userToken = HomeController.Login(email, password);
+            if (userToken == null)
+                return InternalServerError();
+
             //Return ok
-            return Ok();
+            return Ok(userToken);
         }
     }
 }

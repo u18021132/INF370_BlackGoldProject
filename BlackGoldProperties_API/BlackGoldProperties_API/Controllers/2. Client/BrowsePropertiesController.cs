@@ -37,7 +37,7 @@ namespace BlackGoldProperties_API.Controllers._2._Client
                     x.PROPERTYTYPE, 
                     PropertySpaces = x.PROPERTYSPACEs.Select(y => new { y.SPACE, y.PROPERTYSPACEQUANTITY, y.SPACE.SPACETYPE.SPACETYPEDESCRIPTION }).ToList(), 
                     x.LISTINGPICTUREs, 
-                    x.EMPLOYEE.USER, 
+                    //Employee = x.EMPLOYEEs.Select( y=> new { y.USER.USEREMAIL}),   --Fix to go through associative
                     PropertyPOI = x.SUBURB.SUBURBPOINTOFINTERESTs.Select(y => new { y.POINTOFINTEREST, y.POINTOFINTEREST.POINTOFINTERESTTYPE.POINTOFINTERESTTYPEDESCRIPTION, y.SUBURB.SUBURBID, y.SUBURB.SUBURBNAME }).ToList() 
                 }).ToList();
 
@@ -82,8 +82,8 @@ namespace BlackGoldProperties_API.Controllers._2._Client
                     x.PRICEs, 
                     x.PROPERTYTYPE, 
                     PropertySpaces =  x.PROPERTYSPACEs.Select(y => new { y.SPACE, y.PROPERTYSPACEQUANTITY, y.SPACE.SPACETYPE.SPACETYPEDESCRIPTION}).ToList(), 
-                    x.LISTINGPICTUREs, 
-                    x.EMPLOYEE.USER, 
+                    x.LISTINGPICTUREs,
+                    //Employee = x.EMPLOYEEs.Select(y => new { y.USER.USEREMAIL }), --- Fix to this to go through associative
                     PropertyPOI = x.SUBURB.SUBURBPOINTOFINTERESTs.Select(y => new { y.POINTOFINTEREST, y.POINTOFINTEREST.POINTOFINTERESTTYPE.POINTOFINTERESTTYPEDESCRIPTION}).ToList()
                 }).FirstOrDefault();
 

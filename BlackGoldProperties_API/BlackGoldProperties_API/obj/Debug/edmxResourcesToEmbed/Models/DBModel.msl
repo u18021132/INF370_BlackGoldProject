@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="BlackGoldDBModelStoreContainer" CdmEntityContainer="BlackGoldDBEntities5">
+  <EntityContainerMapping StorageEntityContainer="BlackGoldDBModelStoreContainer" CdmEntityContainer="BlackGoldDBEntities10">
     <EntitySetMapping Name="ADVERTISEMENTs">
       <EntityTypeMapping TypeName="BlackGoldDBModel.ADVERTISEMENT">
         <MappingFragment StoreEntitySet="ADVERTISEMENT">
@@ -14,6 +14,7 @@
       <EntityTypeMapping TypeName="BlackGoldDBModel.AUDITREPORT">
         <MappingFragment StoreEntitySet="AUDITREPORT">
           <ScalarProperty Name="AUDITREPORTID" ColumnName="AUDITREPORTID" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="AUDITREPORTDATE" ColumnName="AUDITREPORTDATE" />
           <ScalarProperty Name="AUDITREPORTDOCUMENT" ColumnName="AUDITREPORTDOCUMENT" />
         </MappingFragment>
@@ -82,6 +83,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EMPLOYEEPROPERTies">
+      <EntityTypeMapping TypeName="BlackGoldDBModel.EMPLOYEEPROPERTY">
+        <MappingFragment StoreEntitySet="EMPLOYEEPROPERTY">
+          <ScalarProperty Name="EMPLOYEEPROPERTYID" ColumnName="EMPLOYEEPROPERTYID" />
+          <ScalarProperty Name="PROPERTYID" ColumnName="PROPERTYID" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="EMPLOYEEROLEs">
       <EntityTypeMapping TypeName="BlackGoldDBModel.EMPLOYEEROLE">
         <MappingFragment StoreEntitySet="EMPLOYEEROLE">
@@ -113,8 +123,8 @@
           <ScalarProperty Name="INSPECTIONID" ColumnName="INSPECTIONID" />
           <ScalarProperty Name="INSPECTIONTYPEID" ColumnName="INSPECTIONTYPEID" />
           <ScalarProperty Name="PROPERTYID" ColumnName="PROPERTYID" />
-          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="IVSTATUSID" ColumnName="IVSTATUSID" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="INSPECTIONDOCUMENT" ColumnName="INSPECTIONDOCUMENT" />
           <ScalarProperty Name="INSPECTIONCOMMENT" ColumnName="INSPECTIONCOMMENT" />
           <ScalarProperty Name="INSPECTIONDATE" ColumnName="INSPECTIONDATE" />
@@ -151,7 +161,6 @@
         <MappingFragment StoreEntitySet="MANDATE">
           <ScalarProperty Name="MANDATEID" ColumnName="MANDATEID" />
           <ScalarProperty Name="MANDATETYPEID" ColumnName="MANDATETYPEID" />
-          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="MANDATEDATE" ColumnName="MANDATEDATE" />
           <ScalarProperty Name="MANDATEDOCUMENT" ColumnName="MANDATEDOCUMENT" />
         </MappingFragment>
@@ -230,7 +239,6 @@
           <ScalarProperty Name="MARKETTYPEID" ColumnName="MARKETTYPEID" />
           <ScalarProperty Name="PROPERTYSTATUSID" ColumnName="PROPERTYSTATUSID" />
           <ScalarProperty Name="PROPERTYOWNERID" ColumnName="PROPERTYOWNERID" />
-          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="PROPERTYTYPEID" ColumnName="PROPERTYTYPEID" />
           <ScalarProperty Name="PROPERTYADDRESS" ColumnName="PROPERTYADDRESS" />
         </MappingFragment>
@@ -326,6 +334,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PROPERTYTERMs">
+      <EntityTypeMapping TypeName="BlackGoldDBModel.PROPERTYTERM">
+        <MappingFragment StoreEntitySet="PROPERTYTERM">
+          <ScalarProperty Name="PROPERTYTERMID" ColumnName="PROPERTYTERMID" />
+          <ScalarProperty Name="PROPERTYID" ColumnName="PROPERTYID" />
+          <ScalarProperty Name="TERMID" ColumnName="TERMID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PROPERTYTYPEs">
       <EntityTypeMapping TypeName="BlackGoldDBModel.PROPERTYTYPE">
         <MappingFragment StoreEntitySet="PROPERTYTYPE">
@@ -387,6 +404,8 @@
           <ScalarProperty Name="RENTALAPPLICATIONDATE" ColumnName="RENTALAPPLICATIONDATE" />
           <ScalarProperty Name="RENTALAPPLICATIONDOCUMENT" ColumnName="RENTALAPPLICATIONDOCUMENT" />
           <ScalarProperty Name="RENTALAPPLICATIONNOTE" ColumnName="RENTALAPPLICATIONNOTE" />
+          <ScalarProperty Name="RENTALAPPLICATIONTERM" ColumnName="RENTALAPPLICATIONTERM" />
+          <ScalarProperty Name="RENTALAPPLICATIONSTARTDATE" ColumnName="RENTALAPPLICATIONSTARTDATE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -460,6 +479,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TERMs">
+      <EntityTypeMapping TypeName="BlackGoldDBModel.TERM">
+        <MappingFragment StoreEntitySet="TERM">
+          <ScalarProperty Name="TERMID" ColumnName="TERMID" />
+          <ScalarProperty Name="TERMDESCRIPTION" ColumnName="TERMDESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="USERs">
       <EntityTypeMapping TypeName="BlackGoldDBModel.USER">
         <MappingFragment StoreEntitySet="USER">
@@ -473,6 +500,8 @@
           <ScalarProperty Name="USERIDNUMBER" ColumnName="USERIDNUMBER" />
           <ScalarProperty Name="USERPASSPORTNUMBER" ColumnName="USERPASSPORTNUMBER" />
           <ScalarProperty Name="USERADDRESS" ColumnName="USERADDRESS" />
+          <ScalarProperty Name="USERGUID" ColumnName="USERGUID" />
+          <ScalarProperty Name="USERGUIDEXPIRY" ColumnName="USERGUIDEXPIRY" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -480,9 +509,9 @@
       <EntityTypeMapping TypeName="BlackGoldDBModel.VALUATION">
         <MappingFragment StoreEntitySet="VALUATION">
           <ScalarProperty Name="VALUATIONID" ColumnName="VALUATIONID" />
-          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="IVSTATUSID" ColumnName="IVSTATUSID" />
           <ScalarProperty Name="PROPERTYID" ColumnName="PROPERTYID" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
           <ScalarProperty Name="VALUATIONDOCUMENT" ColumnName="VALUATIONDOCUMENT" />
           <ScalarProperty Name="VALUATIONDATE" ColumnName="VALUATIONDATE" />
           <ScalarProperty Name="VALUATIONDESCRIPTION" ColumnName="VALUATIONDESCRIPTION" />

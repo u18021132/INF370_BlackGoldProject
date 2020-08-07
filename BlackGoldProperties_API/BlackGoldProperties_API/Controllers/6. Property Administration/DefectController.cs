@@ -102,7 +102,7 @@ namespace BlackGoldProperties_API.Controllers._6._Property_Administration
                 //Save DB changes
                 db.SaveChanges();
 
-                //Return ok
+                //Return Ok
                 return Ok();
             }
             catch (Exception)
@@ -134,7 +134,7 @@ namespace BlackGoldProperties_API.Controllers._6._Property_Administration
                 //Save DB changes
                 db.SaveChanges();
 
-                //Return ok
+                //Return Ok
                 return Ok();
             }
             catch (System.Exception)
@@ -165,7 +165,7 @@ namespace BlackGoldProperties_API.Controllers._6._Property_Administration
                 //Save DB Changes
                 db.SaveChanges();
 
-                //Return ok
+                //Return Ok
                 return Ok();
             }
             catch (Exception)

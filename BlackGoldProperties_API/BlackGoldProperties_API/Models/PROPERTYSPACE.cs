@@ -15,7 +15,7 @@ namespace BlackGoldProperties_API.Models
     public partial class PROPERTYSPACE
     {
         public int PROPERTYSPACEID { get; set; }
-        public int SPACEID { get; set; }
+        public Nullable<int> SPACEID { get; set; }
         public int PROPERTYID { get; set; }
         public int PROPERTYSPACEQUANTITY { get; set; }
     

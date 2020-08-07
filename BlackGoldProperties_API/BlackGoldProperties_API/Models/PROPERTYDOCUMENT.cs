@@ -16,8 +16,8 @@ namespace BlackGoldProperties_API.Models
     {
         public int PROPERTYDOCUMENTID { get; set; }
         public int PROPERTYID { get; set; }
-        public int PROPERTYDOCUMENTTYPEID { get; set; }
-        public byte[] PROPERTYDOCUMENT1 { get; set; }
+        public Nullable<int> PROPERTYDOCUMENTTYPEID { get; set; }
+        public string PROPERTYDOCUMENT1 { get; set; }
     
         public virtual PROPERTY PROPERTY { get; set; }
         public virtual PROPERTYDOCUMENTTYPE PROPERTYDOCUMENTTYPE { get; set; }
